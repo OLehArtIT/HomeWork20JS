@@ -1,22 +1,21 @@
-function redirect() {
-      var inputUrl = document.getElementById("inputUrl").value;
-      var url;
-
-      if (!/^https?:\/\//i.test(inputUrl)) {
-        url = "http://" + inputUrl; 
-      } else {
-        url = inputUrl;
+  const redirectButton = document.getElementById("redirect");
+  const checkButton = document.getElementById("check");
+  const urlInput = document.getElementById("input");
+  
+  redirectButton.addEventListener("click", handleButton);
+  checkButton.addEventListener("click", handleButton);
+  
+  function handleButton(event) {
+      const inputUrl = urlInput.value;
+      let redirectURL = inputUrl;
+      let alertMessage = "";
+      
+      if (event.target === redirectButton) {
+          redirectURL = /^https?:\/\//i.test(inputUrl) ? inputUrl : `http://${inputUrl}`;
+          window.location.href = redirectURL;
+      } else if (event.target === checkButton) {
+          alertMessage = /^https?:\/\//i.test(inputUrl) ? "Протокол уже указан." : "Протокол отсутствует. Добавьте протокол http или https.";
+          alert(alertMessage);
       }
-
-      window.open(url);
-    }
-
-    function checkProtocol() {
-      var inputUrl = document.getElementById("inputUrl").value;
-
-      if (!/^https?:\/\//i.test(inputUrl)) {
-        alert("Протокол не указан");
-      } else {
-        alert("Протокол указан");
-    }
-}
+  }
+;
